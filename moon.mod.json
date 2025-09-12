@@ -1,0 +1,9 @@
+{
+  "name": "rami3l/frontmatter",
+  "version": "0.1.0",
+  "readme": "README.md",
+  "repository": "https://github.com/moonbit-community/frontmatter.mbt",
+  "license": "MIT",
+  "keywords": ["frontmatter", "yaml", "toml", "json", "metadata", "parsing"],
+  "description": "A MoonBit library for extracting and parsing front matter from strings. Supports YAML, TOML, and JSON formats with automatic format detection."
+}

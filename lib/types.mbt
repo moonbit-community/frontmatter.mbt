@@ -1,0 +1,23 @@
+// Copyright 2018-2025 the Deno authors. MIT license.
+// Copyright 2025 International Digital Economy Academy
+
+///|
+/// Return type for extract function.
+pub struct Extract[T] {
+  /// The raw front matter string
+  front_matter : String
+  /// The body content after the front matter
+  body : String
+  /// The parsed attributes from the front matter
+  attrs : T
+} derive(Eq, Show)
+
+///|
+/// Create an Extract result
+pub fn[T] Extract::new(
+  front_matter : String,
+  body : String,
+  attrs : T,
+) -> Extract[T] {
+  { front_matter, body, attrs }
+}
