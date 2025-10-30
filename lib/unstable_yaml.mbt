@@ -104,14 +104,14 @@ pub fn extract_with_validation(
 /// This provides enhanced validation beyond basic pattern matching.
 fn validate_yaml_structure(text : String) -> Unit raise FrontMatterError {
   if text.is_empty() {
-    raise FrontMatterError("Unexpected end of input")
+    raise EmptyInput
   }
 
   // Check for basic structural requirements
   let lines = text.split("\n").to_array()
   if lines.length() < 3 {
     // YAML front matter needs at least header, content, and footer
-    raise FrontMatterError("Unexpected end of input")
+    raise MinimumStructure
   }
 
   // Additional validation can be added here for specific YAML patterns
