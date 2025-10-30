@@ -10,12 +10,33 @@ pub struct FrontMatterResult {
 
 ///|
 /// Error type for front matter parsing errors.
-pub suberror FrontMatterError String
+pub suberror FrontMatterError {
+  EmptyInput
+  NoValidHeader
+  MissingFooter
+  InvalidHeaderFormat
+  MinimumStructure
+  UnsupportedFormat
+}
 
 ///|
 impl Show for FrontMatterError with output(self, logger) -> Unit {
   match self {
-    FrontMatterError(msg) => logger.write_string("FrontMatterError: " + msg)
+    EmptyInput => logger.write_string("FrontMatterError: Input text is empty")
+    NoValidHeader =>
+      logger.write_string("FrontMatterError: No valid front matter header found")
+    MissingFooter =>
+      logger.write_string(
+        "FrontMatterError: Front matter not properly closed - missing end delimiter",
+      )
+    InvalidHeaderFormat =>
+      logger.write_string("FrontMatterError: Invalid front matter header format")
+    MinimumStructure =>
+      logger.write_string(
+        "FrontMatterError: Front matter requires at least header and footer lines",
+      )
+    UnsupportedFormat =>
+      logger.write_string("FrontMatterError: Unsupported front matter format")
   }
 }
 
@@ -46,7 +67,7 @@ pub fn extract_front_matter(
   format : Format,
 ) -> FrontMatterResult raise FrontMatterError {
   if input.is_empty() {
-    raise FrontMatterError("Unexpected end of input")
+    raise EmptyInput
   }
   let cleaned_input = remove_bom(input)
 
@@ -82,10 +103,10 @@ fn extract_yaml_front_matter_raw(
     if !input.contains("---toml") && !input.contains("---json") {
       extract_yaml_with_flexible_footer(input, "---")
     } else {
-      raise FrontMatterError("Unexpected end of input")
+      raise NoValidHeader
     }
   } else {
-    raise FrontMatterError("Unexpected end of input")
+    raise NoValidHeader
   }
 }
 
@@ -97,18 +118,18 @@ fn extract_yaml_with_flexible_footer(
 ) -> FrontMatterResult raise FrontMatterError {
   let lines = input.split("\n").to_array()
   if lines.length() < 1 {
-    raise FrontMatterError("Unexpected end of input")
+    raise EmptyInput
   }
 
   // Validate first line has correct header with optional whitespace
   let first_line = lines[0].to_string()
   if !matches_header_pattern(first_line, start_delimiter) {
-    raise FrontMatterError("Unexpected end of input")
+    raise InvalidHeaderFormat
   }
 
   // Handle minimum structure requirements
   if lines.length() < 2 {
-    raise FrontMatterError("Unexpected end of input")
+    raise MinimumStructure
   }
 
   // Find the end delimiter line - allow either "---" or "= yaml =" for YAML
@@ -122,7 +143,7 @@ fn extract_yaml_with_flexible_footer(
     }
   }
   if end_index == -1 {
-    raise FrontMatterError("Unexpected end of input")
+    raise MissingFooter
   }
 
   // Special case: if header and footer are adjacent (empty front matter)
@@ -168,7 +189,7 @@ fn extract_toml_front_matter_raw(
   } else if string_starts_with(input, "= toml =") {
     extract_toml_with_flexible_footer(input, "= toml =")
   } else {
-    raise FrontMatterError("Unexpected end of input")
+    raise NoValidHeader
   }
 }
 
@@ -180,18 +201,18 @@ fn extract_toml_with_flexible_footer(
 ) -> FrontMatterResult raise FrontMatterError {
   let lines = input.split("\n").to_array()
   if lines.length() < 1 {
-    raise FrontMatterError("Unexpected end of input")
+    raise EmptyInput
   }
 
   // Validate first line has correct header with optional whitespace
   let first_line = lines[0].to_string()
   if !matches_header_pattern(first_line, start_delimiter) {
-    raise FrontMatterError("Unexpected end of input")
+    raise InvalidHeaderFormat
   }
 
   // Handle minimum structure requirements
   if lines.length() < 2 {
-    raise FrontMatterError("Unexpected end of input")
+    raise MinimumStructure
   }
 
   // Find the end delimiter line - allow "---", "+++", or "= toml =" for TOML
@@ -206,7 +227,7 @@ fn extract_toml_with_flexible_footer(
     }
   }
   if end_index == -1 {
-    raise FrontMatterError("Unexpected end of input")
+    raise MissingFooter
   }
 
   // Special case: if header and footer are adjacent (empty front matter)
@@ -250,7 +271,7 @@ fn extract_json_front_matter_raw(
   } else if string_starts_with(input, "= json =") {
     extract_with_pattern_matching(input, "= json =", "= json =")
   } else {
-    raise FrontMatterError("Unexpected end of input")
+    raise NoValidHeader
   }
 }
 
@@ -264,19 +285,19 @@ fn extract_with_pattern_matching(
 ) -> FrontMatterResult raise FrontMatterError {
   let lines = input.split("\n").to_array()
   if lines.length() < 1 {
-    raise FrontMatterError("Unexpected end of input")
+    raise EmptyInput
   }
 
   // Validate first line has correct header with optional whitespace
   // This follows the TypeScript WHITESPACES + NEWLINE pattern logic
   let first_line = lines[0].to_string()
   if !matches_header_pattern(first_line, start_delimiter) {
-    raise FrontMatterError("Unexpected end of input")
+    raise InvalidHeaderFormat
   }
 
   // Handle minimum structure requirements (following TypeScript regex structure)
   if lines.length() < 2 {
-    raise FrontMatterError("Unexpected end of input")
+    raise MinimumStructure
   }
 
   // Find the end delimiter line (following TypeScript footer matching)
@@ -289,7 +310,7 @@ fn extract_with_pattern_matching(
     }
   }
   if end_index == -1 {
-    raise FrontMatterError("Unexpected end of input")
+    raise MissingFooter
   }
 
   // Validate body separation: if footer is immediately followed by non-whitespace
@@ -301,7 +322,7 @@ fn extract_with_pattern_matching(
       None => ""
     }
     if !remaining_content.is_empty() {
-      raise FrontMatterError("Unexpected end of input")
+      raise InvalidHeaderFormat
     }
   }
 

@@ -206,7 +206,8 @@ test "yaml throws on invalid input cases" {
     let _ = extract_yaml("")
     fail("Should have thrown error for empty string")
   } catch {
-    FrontMatterError(_) => error_count = error_count + 1
+    EmptyInput | NoValidHeader | MissingFooter | InvalidHeaderFormat | MinimumStructure | UnsupportedFormat =>
+      error_count = error_count + 1
     _ => fail("Unexpected error type")
   }
 
@@ -215,7 +216,8 @@ test "yaml throws on invalid input cases" {
     let _ = extract_yaml("---")
     fail("Should have thrown error for incomplete delimiter")
   } catch {
-    FrontMatterError(_) => error_count = error_count + 1
+    EmptyInput | NoValidHeader | MissingFooter | InvalidHeaderFormat | MinimumStructure | UnsupportedFormat =>
+      error_count = error_count + 1
     _ => fail("Unexpected error type")
   }
 
@@ -224,7 +226,8 @@ test "yaml throws on invalid input cases" {
     let _ = extract_yaml("---yaml")
     fail("Should have thrown error for header without newline")
   } catch {
-    FrontMatterError(_) => error_count = error_count + 1
+    EmptyInput | NoValidHeader | MissingFooter | InvalidHeaderFormat | MinimumStructure | UnsupportedFormat =>
+      error_count = error_count + 1
     _ => fail("Unexpected error type")
   }
 
@@ -233,7 +236,8 @@ test "yaml throws on invalid input cases" {
     let _ = extract_yaml("---\nasdasdasd")
     fail("Should have thrown error for missing closing delimiter")
   } catch {
-    FrontMatterError(_) => error_count = error_count + 1
+    EmptyInput | NoValidHeader | MissingFooter | InvalidHeaderFormat | MinimumStructure | UnsupportedFormat =>
+      error_count = error_count + 1
     _ => fail("Unexpected error type")
   }
   inspect(error_count, content="4")
@@ -249,7 +253,8 @@ test "toml throws on invalid input cases" {
     let _ = extract_toml("")
     fail("Should have thrown error for empty string")
   } catch {
-    FrontMatterError(_) => error_count = error_count + 1
+    EmptyInput | NoValidHeader | MissingFooter | InvalidHeaderFormat | MinimumStructure | UnsupportedFormat =>
+      error_count = error_count + 1
     _ => fail("Unexpected error type")
   }
 
@@ -258,7 +263,8 @@ test "toml throws on invalid input cases" {
     let _ = extract_toml("---toml")
     fail("Should have thrown error for incomplete delimiter")
   } catch {
-    FrontMatterError(_) => error_count = error_count + 1
+    EmptyInput | NoValidHeader | MissingFooter | InvalidHeaderFormat | MinimumStructure | UnsupportedFormat =>
+      error_count = error_count + 1
     _ => fail("Unexpected error type")
   }
 
@@ -267,7 +273,8 @@ test "toml throws on invalid input cases" {
     let _ = extract_toml("---")
     fail("Should have thrown error for wrong delimiter")
   } catch {
-    FrontMatterError(_) => error_count = error_count + 1
+    EmptyInput | NoValidHeader | MissingFooter | InvalidHeaderFormat | MinimumStructure | UnsupportedFormat =>
+      error_count = error_count + 1
     _ => fail("Unexpected error type")
   }
   inspect(error_count, content="3")
@@ -283,7 +290,8 @@ test "json throws on invalid input cases" {
     let _ = extract_json("")
     fail("Should have thrown error for empty string")
   } catch {
-    FrontMatterError(_) => error_count = error_count + 1
+    EmptyInput | NoValidHeader | MissingFooter | InvalidHeaderFormat | MinimumStructure | UnsupportedFormat =>
+      error_count = error_count + 1
     _ => fail("Unexpected error type")
   }
 
@@ -292,7 +300,8 @@ test "json throws on invalid input cases" {
     let _ = extract_json("---json")
     fail("Should have thrown error for incomplete delimiter")
   } catch {
-    FrontMatterError(_) => error_count = error_count + 1
+    EmptyInput | NoValidHeader | MissingFooter | InvalidHeaderFormat | MinimumStructure | UnsupportedFormat =>
+      error_count = error_count + 1
     _ => fail("Unexpected error type")
   }
 
@@ -301,7 +310,8 @@ test "json throws on invalid input cases" {
     let _ = extract_json("---")
     fail("Should have thrown error for wrong delimiter")
   } catch {
-    FrontMatterError(_) => error_count = error_count + 1
+    EmptyInput | NoValidHeader | MissingFooter | InvalidHeaderFormat | MinimumStructure | UnsupportedFormat =>
+      error_count = error_count + 1
     _ => fail("Unexpected error type")
   }
   inspect(error_count, content="3")
@@ -315,10 +325,7 @@ test "any format throws on unsupported format" {
     let _ = extract_any(input)
     fail("Should have thrown error for unsupported format")
   } catch {
-    FrontMatterError(msg) =>
-      if msg != "Unsupported front matter format" {
-        fail("Unexpected error message: " + msg)
-      }
+    UnsupportedFormat => ()
     _ => fail("Unexpected error type")
   }
 }
@@ -390,7 +397,8 @@ test "extraction handles invalid inputs" {
     let _ = extract_json("")
     fail("Should have thrown error for empty input")
   } catch {
-    FrontMatterError(_) => ()
+    EmptyInput | NoValidHeader | MissingFooter | InvalidHeaderFormat | MinimumStructure | UnsupportedFormat =>
+      ()
     _ => fail("Unexpected error type")
   }
 
@@ -399,7 +407,8 @@ test "extraction handles invalid inputs" {
     let _ = extract_json("---")
     fail("Should have thrown error for incomplete delimiters")
   } catch {
-    FrontMatterError(_) => ()
+    EmptyInput | NoValidHeader | MissingFooter | InvalidHeaderFormat | MinimumStructure | UnsupportedFormat =>
+      ()
     _ => fail("Unexpected error type")
   }
 
@@ -408,7 +417,8 @@ test "extraction handles invalid inputs" {
     let _ = extract_json("---toml\nfoo = \"bar\"\n---\n")
     fail("Should have thrown error for wrong format")
   } catch {
-    FrontMatterError(_) => ()
+    EmptyInput | NoValidHeader | MissingFooter | InvalidHeaderFormat | MinimumStructure | UnsupportedFormat =>
+      ()
     _ => fail("Unexpected error type")
   }
 }
@@ -523,10 +533,7 @@ test "yaml throws at missing newline before body" {
     let _ = extract_yaml(input)
     fail("Should have thrown error for missing newline before body")
   } catch {
-    FrontMatterError(msg) =>
-      if msg != "Unexpected end of input" {
-        fail("Unexpected error message: " + msg)
-      }
+    MissingFooter => ()
     _ => fail("Unexpected error type")
   }
 }
@@ -567,7 +574,8 @@ test "additional error handling edge cases" {
     let _ = extract_yaml("---invalid\nfoo: bar\n---\n")
     fail("Should have thrown error for invalid header")
   } catch {
-    FrontMatterError(_) => ()
+    EmptyInput | NoValidHeader | MissingFooter | InvalidHeaderFormat | MinimumStructure | UnsupportedFormat =>
+      ()
     _ => fail("Unexpected error type")
   }
 
@@ -576,7 +584,8 @@ test "additional error handling edge cases" {
     let _ = extract_toml("---invalid\nfoo = \"bar\"\n---\n")
     fail("Should have thrown error for invalid TOML header")
   } catch {
-    FrontMatterError(_) => ()
+    EmptyInput | NoValidHeader | MissingFooter | InvalidHeaderFormat | MinimumStructure | UnsupportedFormat =>
+      ()
     _ => fail("Unexpected error type")
   }
 
@@ -585,7 +594,8 @@ test "additional error handling edge cases" {
     let _ = extract_json("---invalid\n{\"foo\": \"bar\"}\n---\n")
     fail("Should have thrown error for invalid JSON header")
   } catch {
-    FrontMatterError(_) => ()
+    EmptyInput | NoValidHeader | MissingFooter | InvalidHeaderFormat | MinimumStructure | UnsupportedFormat =>
+      ()
     _ => fail("Unexpected error type")
   }
 
@@ -594,7 +604,8 @@ test "additional error handling edge cases" {
     let _ = extract_yaml("---\nfoo: bar\n---content")
     fail("Should have thrown error for content immediately after footer")
   } catch {
-    FrontMatterError(_) => ()
+    EmptyInput | NoValidHeader | MissingFooter | InvalidHeaderFormat | MinimumStructure | UnsupportedFormat =>
+      ()
     _ => fail("Unexpected error type")
   }
 }
@@ -606,13 +617,7 @@ test "front matter error display" {
     let _ = extract_yaml("")
     fail("Should have thrown error")
   } catch {
-    FrontMatterError(msg) => {
-      // Test that error message is properly formatted
-      inspect(msg, content="Unexpected end of input")
-      // This covers the error display functionality
-      let error_str = "FrontMatterError: " + msg
-      inspect(error_str, content="FrontMatterError: Unexpected end of input")
-    }
+    EmptyInput => ()
     _ => fail("Unexpected error type")
   }
 }
@@ -688,7 +693,8 @@ test "unstable yaml validation error for insufficient lines" {
     let _ = extract_with_validation(input, true)
     fail("Expected FrontMatterError")
   } catch {
-    FrontMatterError(_) => ()
+    EmptyInput | NoValidHeader | MissingFooter | InvalidHeaderFormat | MinimumStructure | UnsupportedFormat =>
+      ()
     _ => fail("Expected FrontMatterError")
   }
 }
@@ -717,9 +723,7 @@ test "performance optimization validation - boundary checking" {
     let _ = extract_json(input)
     fail("Expected FrontMatterError for boundary violation")
   } catch {
-    FrontMatterError(msg) =>
-      // Verify the error message matches TypeScript reference
-      inspect(msg, content="Unexpected end of input")
+    MissingFooter => ()
     _ => fail("Expected FrontMatterError")
   }
 }
@@ -765,7 +769,8 @@ test "enhanced error boundary validation" {
       }
       fail("Expected FrontMatterError for input with trailing content")
     } catch {
-      FrontMatterError(_) => error_count = error_count + 1
+      EmptyInput | NoValidHeader | MissingFooter | InvalidHeaderFormat | MinimumStructure | UnsupportedFormat =>
+        error_count = error_count + 1
       _ => fail("Expected FrontMatterError")
     }
   }

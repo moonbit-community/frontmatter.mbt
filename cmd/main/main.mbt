@@ -15,7 +15,7 @@ fn main {
       "   Has front matter: " + @lib.has_front_matter(yaml_content).to_string(),
     )
   } catch {
-    @lib.FrontMatterError(msg) => println("   YAML Error: " + msg)
+    _ => println("   YAML Error: Failed to extract front matter")
   }
 
   // Test TOML front matter
@@ -29,7 +29,7 @@ fn main {
       "   Test TOML format: " + @lib.test_toml_format(toml_content).to_string(),
     )
   } catch {
-    @lib.FrontMatterError(msg) => println("   TOML Error: " + msg)
+    _ => println("   TOML Error: Failed to extract front matter")
   }
 
   // Test JSON front matter
@@ -43,7 +43,7 @@ fn main {
       "   Test JSON format: " + @lib.test_json_format(json_content).to_string(),
     )
   } catch {
-    @lib.FrontMatterError(msg) => println("   JSON Error: " + msg)
+    _ => println("   JSON Error: Failed to extract front matter")
   }
 
   // Test auto-detection
@@ -57,7 +57,7 @@ fn main {
       None => println("   No format detected")
     }
   } catch {
-    @lib.FrontMatterError(msg) => println("   Auto-detection Error: " + msg)
+    _ => println("   Auto-detection Error: Failed to detect or extract front matter")
   }
 
   // Test Unicode and special characters
@@ -68,7 +68,7 @@ fn main {
     println("   Unicode front matter extracted successfully")
     println("   Body length: " + unicode_result.body.length().to_string())
   } catch {
-    @lib.FrontMatterError(msg) => println("   Unicode Error: " + msg)
+    _ => println("   Unicode Error: Failed to extract front matter")
   }
   println("\n✓ Front Matter Module Demo Complete!")
 }

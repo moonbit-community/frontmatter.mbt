@@ -12,7 +12,7 @@
 /// @returns The extracted JSON front matter and body content.
 pub fn extract_json(text : String) -> Extract[String] raise FrontMatterError {
   if text.is_empty() {
-    raise FrontMatterError("Unexpected end of input")
+    raise EmptyInput
   }
   let raw_result = extract_front_matter(text, Json)
 

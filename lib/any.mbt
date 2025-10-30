@@ -27,7 +27,7 @@ pub fn extract_any(text : String) -> Extract[String] raise FrontMatterError {
         Toml => extract_toml(text)
         Yaml => extract_yaml(text)
       }
-    None => raise FrontMatterError("Unsupported front matter format")
+    None => raise UnsupportedFormat
   }
 }
 

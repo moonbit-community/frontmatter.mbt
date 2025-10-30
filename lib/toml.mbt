@@ -12,7 +12,7 @@
 /// @returns The extracted TOML front matter and body content.
 pub fn extract_toml(text : String) -> Extract[String] raise FrontMatterError {
   if text.is_empty() {
-    raise FrontMatterError("Unexpected end of input")
+    raise EmptyInput
   }
   let raw_result = extract_front_matter(text, Toml)
 
