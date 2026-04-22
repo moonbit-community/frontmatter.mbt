@@ -34,27 +34,27 @@ let bom_pattern = "\ufeff"
 
 ///|
 /// YAML header patterns (equivalent to TypeScript YAML_HEADER)
-pub let yaml_header_patterns = ["---yaml", "= yaml =", "---"]
+pub let yaml_header_patterns : ReadOnlyArray[String] = ["---yaml", "= yaml =", "---"]
 
 ///|
 /// YAML footer patterns (equivalent to TypeScript YAML_FOOTER)  
-pub let yaml_footer_patterns = ["= yaml =", "---"]
+pub let yaml_footer_patterns : ReadOnlyArray[String] = ["= yaml =", "---"]
 
 ///|
 /// TOML header patterns (equivalent to TypeScript TOML_HEADER)
-pub let toml_header_patterns = ["---toml", "+++", "= toml ="]
+pub let toml_header_patterns : ReadOnlyArray[String] = ["---toml", "+++", "= toml ="]
 
 ///|
 /// TOML footer patterns (equivalent to TypeScript TOML_FOOTER)
-pub let toml_footer_patterns = ["---", "+++", "= toml ="]
+pub let toml_footer_patterns : ReadOnlyArray[String] = ["---", "+++", "= toml ="]
 
 ///|
 /// JSON header patterns (equivalent to TypeScript JSON_HEADER)
-pub let json_header_patterns = ["---json", "= json ="]
+pub let json_header_patterns : ReadOnlyArray[String] = ["---json", "= json ="]
 
 ///|
 /// JSON footer patterns (equivalent to TypeScript JSON_FOOTER)
-pub let json_footer_patterns = ["---", "= json ="]
+pub let json_footer_patterns : ReadOnlyArray[String] = ["---", "= json ="]
 
 ///|
 /// Newline patterns
@@ -115,7 +115,7 @@ pub fn matches_footer_pattern(line : String, pattern : String) -> Bool {
 
 ///|
 /// Get header patterns for a format
-pub fn get_header_patterns(format : Format) -> Array[String] {
+pub fn get_header_patterns(format : Format) -> ReadOnlyArray[String] {
   match format {
     Yaml => yaml_header_patterns
     Toml => toml_header_patterns
@@ -125,7 +125,7 @@ pub fn get_header_patterns(format : Format) -> Array[String] {
 
 ///|
 /// Get footer patterns for a format
-pub fn get_footer_patterns(format : Format) -> Array[String] {
+pub fn get_footer_patterns(format : Format) -> ReadOnlyArray[String] {
   match format {
     Yaml => yaml_footer_patterns
     Toml => toml_footer_patterns
