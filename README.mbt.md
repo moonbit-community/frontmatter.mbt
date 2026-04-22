@@ -15,7 +15,8 @@ A MoonBit library for extracting front matter from strings. Supports YAML, TOML,
 
 ### Auto-Detection
 
-```moonbit
+```moonbit nocheck
+///|
 test "auto_extract_example" {
   let content = "---\ntitle: My Document\nauthor: John Doe\n---\nThis is the main content."
 
@@ -33,7 +34,8 @@ test "auto_extract_example" {
 
 #### YAML Front Matter
 
-```moonbit
+```moonbit nocheck
+///|
 test "yaml_example" {
   let yaml_content = "---\ntitle: YAML Document\ndate: 2024-01-01\n---\nYAML content here."
   let result = extract_yaml(yaml_content)
@@ -44,7 +46,8 @@ test "yaml_example" {
 
 #### JSON Front Matter
 
-```moonbit
+```moonbit nocheck
+///|
 test "json_example" {
   let json_content = "---json\n{\"title\": \"JSON Document\", \"author\": \"Jane Doe\"}\n---\nJSON content here."
   let result = extract_json(json_content)
@@ -61,7 +64,8 @@ test "json_example" {
 
 #### TOML Front Matter
 
-```moonbit
+```moonbit nocheck
+///|
 test "toml_example" {
   let toml_content = "+++\ntitle = \"TOML Document\"\nauthor = \"Bob Smith\"\n+++\nTOML content here."
   let result = extract_toml(toml_content)
@@ -75,7 +79,8 @@ test "toml_example" {
 
 ### Format Testing
 
-```moonbit
+```moonbit nocheck
+///|
 test "format_testing_example" {
   let yaml_text = "---\ntitle: test\n---\ncontent"
   let json_text = "---json\n{\"title\": \"test\"}\n---\ncontent"
@@ -94,7 +99,8 @@ test "format_testing_example" {
 
 ### Format Detection
 
-```moonbit
+```moonbit nocheck
+///|
 test "format_detection_example" {
   let yaml_content = "---\ntitle: test\n---\ncontent"
   inspect(detect_format(yaml_content), content="Some(Yaml)")

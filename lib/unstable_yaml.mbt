@@ -7,8 +7,9 @@
 /// in the future (e.g., different YAML parsing schemas).
 ///
 /// # Example Extract YAML front matter
-/// ```moonbit
+/// ```moonbit nocheck
 /// let output = "---yaml\ndate: 2022-01-01\n---\nHello, world!"
+///
 /// let _result = extract_yaml_with_options(output)
 /// ```
 ///

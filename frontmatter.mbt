@@ -100,7 +100,7 @@
 
 ///|
 /// Re-export core types from lib module
-pub using @lib { type Extract, type Format, type FrontMatterError }
+pub using @lib {type Extract, type Format, type FrontMatterError}
 
 ///|
 /// Re-export test functions from lib module
