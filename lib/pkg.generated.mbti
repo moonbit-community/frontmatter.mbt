@@ -1,99 +1,104 @@
 // Generated using `moon info`, DON'T EDIT IT
 package "rami3l/frontmatter/lib"
 
+import {
+  "moonbitlang/core/debug",
+}
+
 // Values
-fn detect_format_any(String) -> Format?
+pub fn detect_format_any(String) -> Format?
 
-fn extract_any(String) -> Extract[String] raise FrontMatterError
+pub fn extract_any(String) -> Extract[String] raise FrontMatterError
 
-fn extract_front_matter(String, Format) -> FrontMatterResult raise FrontMatterError
+pub fn extract_front_matter(String, Format) -> FrontMatterResult raise FrontMatterError
 
-fn extract_json(String) -> Extract[String] raise FrontMatterError
+pub fn extract_json(String) -> Extract[String] raise FrontMatterError
 
-fn extract_lenient(String) -> Extract[String] raise FrontMatterError
+pub fn extract_lenient(String) -> Extract[String] raise FrontMatterError
 
-fn extract_strict(String) -> Extract[String] raise FrontMatterError
+pub fn extract_strict(String) -> Extract[String] raise FrontMatterError
 
-fn extract_toml(String) -> Extract[String] raise FrontMatterError
+pub fn extract_toml(String) -> Extract[String] raise FrontMatterError
 
-fn extract_unstable(String) -> Extract[String] raise FrontMatterError
+pub fn extract_unstable(String) -> Extract[String] raise FrontMatterError
 
-fn extract_with_options(String, Bool) -> Extract[String] raise FrontMatterError
+pub fn extract_with_options(String, Bool) -> Extract[String] raise FrontMatterError
 
-fn extract_with_schema(String, String) -> Extract[String] raise FrontMatterError
+pub fn extract_with_schema(String, String) -> Extract[String] raise FrontMatterError
 
-fn extract_with_validation(String, Bool) -> Extract[String] raise FrontMatterError
+pub fn extract_with_validation(String, Bool) -> Extract[String] raise FrontMatterError
 
-fn extract_yaml(String) -> Extract[String] raise FrontMatterError
+pub fn extract_yaml(String) -> Extract[String] raise FrontMatterError
 
-fn extract_yaml_with_options(String) -> Extract[String] raise FrontMatterError
+pub fn extract_yaml_with_options(String) -> Extract[String] raise FrontMatterError
 
-fn format_has_footer(Format, String) -> Bool
+pub fn format_has_footer(Format, String) -> Bool
 
-fn format_has_header(Format, String) -> Bool
+pub fn format_has_header(Format, String) -> Bool
 
-fn get_footer_patterns(Format) -> Array[String]
+pub fn get_footer_patterns(Format) -> ReadOnlyArray[String]
 
-fn get_header_patterns(Format) -> Array[String]
+pub fn get_header_patterns(Format) -> ReadOnlyArray[String]
 
-fn has_any_front_matter(String) -> Bool
+pub fn has_any_front_matter(String) -> Bool
 
-fn has_bom(String) -> Bool
+pub fn has_bom(String) -> Bool
 
-fn has_front_matter(String) -> Bool
+pub fn has_front_matter(String) -> Bool
 
-let json_footer_patterns : Array[String]
+pub let json_footer_patterns : ReadOnlyArray[String]
 
-let json_header_patterns : Array[String]
+pub let json_header_patterns : ReadOnlyArray[String]
 
-fn matches_footer_pattern(String, String) -> Bool
+pub fn matches_footer_pattern(String, String) -> Bool
 
-fn matches_header_pattern(String, String) -> Bool
+pub fn matches_header_pattern(String, String) -> Bool
 
-let newline_chars : String
+pub let newline_chars : String
 
-fn remove_bom_prefix(String) -> String
+pub fn remove_bom_prefix(String) -> String
 
-fn test_format(String, Format) -> Bool
+pub fn test_format(String, Format) -> Bool
 
-fn test_front_matter(String, formats? : Array[Format]) -> Bool
+pub fn test_front_matter(String, formats? : Array[Format]) -> Bool
 
-fn test_json_format(String) -> Bool
+pub fn test_json_format(String) -> Bool
 
-fn test_toml_format(String) -> Bool
+pub fn test_toml_format(String) -> Bool
 
-fn test_yaml_format(String) -> Bool
+pub fn test_yaml_format(String) -> Bool
 
-fn test_yaml_unstable(String) -> Bool
+pub fn test_yaml_unstable(String) -> Bool
 
-let toml_footer_patterns : Array[String]
+pub let toml_footer_patterns : ReadOnlyArray[String]
 
-let toml_header_patterns : Array[String]
+pub let toml_header_patterns : ReadOnlyArray[String]
 
-let yaml_footer_patterns : Array[String]
+pub let yaml_footer_patterns : ReadOnlyArray[String]
 
-let yaml_header_patterns : Array[String]
+pub let yaml_header_patterns : ReadOnlyArray[String]
 
 // Errors
-pub suberror FrontMatterError String
+pub suberror FrontMatterError {
+  FrontMatterError(String)
+}
 
 // Types and methods
 pub struct Extract[T] {
   front_matter : String
   body : String
   attrs : T
-}
-fn[T] Extract::new(String, String, T) -> Self[T]
-impl[T : Eq] Eq for Extract[T]
-impl[T : Show] Show for Extract[T]
+} derive(Eq, @debug.Debug)
+pub fn[T] Extract::new(String, String, T) -> Self[T]
+pub impl[T : Show] Show for Extract[T]
 
 pub enum Format {
   Yaml
   Toml
   Json
-}
-impl Eq for Format
-impl Show for Format
+} derive(Eq, @debug.Debug)
+pub fn Format::to_string(Self) -> String
+pub impl Show for Format
 
 pub struct FrontMatterResult {
   front_matter : String
@@ -103,3 +108,4 @@ pub struct FrontMatterResult {
 // Type aliases
 
 // Traits
+

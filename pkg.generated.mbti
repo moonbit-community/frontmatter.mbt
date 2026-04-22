@@ -1,56 +1,57 @@
 // Generated using `moon info`, DON'T EDIT IT
 package "rami3l/frontmatter"
 
-import(
-  "rami3l/frontmatter/lib"
-)
+import {
+  "rami3l/frontmatter/lib",
+}
 
 // Values
-fn detect_format(String) -> @lib.Format?
+pub fn detect_format(String) -> @lib.Format?
 
-fn detect_format_any(String) -> @lib.Format?
+pub fn detect_format_any(String) -> @lib.Format?
 
-fn extract_any(String) -> @lib.Extract[String] raise @lib.FrontMatterError
+pub fn extract_any(String) -> @lib.Extract[String] raise @lib.FrontMatterError
 
-fn extract_json(String) -> @lib.Extract[String] raise @lib.FrontMatterError
+pub fn extract_json(String) -> @lib.Extract[String] raise @lib.FrontMatterError
 
-fn extract_toml(String) -> @lib.Extract[String] raise @lib.FrontMatterError
+pub fn extract_toml(String) -> @lib.Extract[String] raise @lib.FrontMatterError
 
-fn extract_yaml(String) -> @lib.Extract[String] raise @lib.FrontMatterError
+pub fn extract_yaml(String) -> @lib.Extract[String] raise @lib.FrontMatterError
 
-fn extract_yaml_front_matter(String) -> @lib.Extract[String] raise @lib.FrontMatterError
+pub fn extract_yaml_front_matter(String) -> @lib.Extract[String] raise @lib.FrontMatterError
 
-fn extract_yaml_lenient(String) -> @lib.Extract[String] raise @lib.FrontMatterError
+pub fn extract_yaml_lenient(String) -> @lib.Extract[String] raise @lib.FrontMatterError
 
-fn extract_yaml_strict(String) -> @lib.Extract[String] raise @lib.FrontMatterError
+pub fn extract_yaml_strict(String) -> @lib.Extract[String] raise @lib.FrontMatterError
 
-fn extract_yaml_with_options(String) -> @lib.Extract[String] raise @lib.FrontMatterError
+pub fn extract_yaml_with_options(String) -> @lib.Extract[String] raise @lib.FrontMatterError
 
-fn extract_yaml_with_schema(String, String) -> @lib.Extract[String] raise @lib.FrontMatterError
+pub fn extract_yaml_with_schema(String, String) -> @lib.Extract[String] raise @lib.FrontMatterError
 
-fn extract_yaml_with_validation(String, Bool) -> @lib.Extract[String] raise @lib.FrontMatterError
+pub fn extract_yaml_with_validation(String, Bool) -> @lib.Extract[String] raise @lib.FrontMatterError
 
-fn has_any_front_matter(String) -> Bool
+pub fn has_any_front_matter(String) -> Bool
 
-fn has_front_matter(String) -> Bool
+pub fn has_front_matter(String) -> Bool
 
-fn test_format(String, @lib.Format) -> Bool
+pub fn test_format(String, @lib.Format) -> Bool
 
-fn test_json_format(String) -> Bool
+pub fn test_json_format(String) -> Bool
 
-fn test_toml_format(String) -> Bool
+pub fn test_toml_format(String) -> Bool
 
-fn test_yaml_format(String) -> Bool
+pub fn test_yaml_format(String) -> Bool
 
 // Errors
 
 // Types and methods
 
 // Type aliases
-pub typealias @lib.Extract as Extract
+pub using @lib {type Extract}
 
-pub typealias @lib.Format as Format
+pub using @lib {type Format}
 
-pub typealias @lib.FrontMatterError as FrontMatterError
+pub using @lib {type FrontMatterError}
 
 // Traits
+
