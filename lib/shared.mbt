@@ -10,7 +10,9 @@ pub struct FrontMatterResult {
 
 ///|
 /// Error type for front matter parsing errors.
-pub suberror FrontMatterError String
+pub suberror FrontMatterError {
+  FrontMatterError(String)
+}
 
 ///|
 impl Show for FrontMatterError with output(self, logger) -> Unit {
