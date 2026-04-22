@@ -109,7 +109,7 @@ pub fn matches_header_pattern(line : String, pattern : String) -> Bool {
 ///|
 /// Check if a line matches a footer pattern with proper whitespace handling
 pub fn matches_footer_pattern(line : String, pattern : String) -> Bool {
-  let trimmed = line.trim_space()
+  let trimmed = line.trim()
   trimmed == pattern
 }
 
