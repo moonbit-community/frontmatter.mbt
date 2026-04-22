@@ -153,7 +153,7 @@ fn extract_yaml_with_flexible_footer(
   let body = body_lines.join("\n")
 
   // Clean front matter following TypeScript whitespace handling
-  let clean_front_matter = front_matter.trim_space().to_string()
+  let clean_front_matter = front_matter.trim().to_string()
   FrontMatterResult::{ front_matter: clean_front_matter, body }
 }
 
@@ -237,7 +237,7 @@ fn extract_toml_with_flexible_footer(
   let body = body_lines.join("\n")
 
   // Clean front matter following TypeScript whitespace handling
-  let clean_front_matter = front_matter.trim_space().to_string()
+  let clean_front_matter = front_matter.trim().to_string()
   FrontMatterResult::{ front_matter: clean_front_matter, body }
 }
 
@@ -299,7 +299,7 @@ fn extract_with_pattern_matching(
   if end_index < lines.length() {
     let footer_line = lines[end_index].to_string()
     let remaining_content = match footer_line.strip_prefix(end_delimiter) {
-      Some(rest) => rest.trim_space()
+      Some(rest) => rest.trim()
       None => ""
     }
     if !remaining_content.is_empty() {
@@ -345,6 +345,6 @@ fn extract_with_pattern_matching(
   }
 
   // Clean front matter following TypeScript whitespace handling
-  let clean_front_matter = front_matter.trim_space().to_string()
+  let clean_front_matter = front_matter.trim().to_string()
   FrontMatterResult::{ front_matter: clean_front_matter, body }
 }
