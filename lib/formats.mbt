@@ -8,7 +8,21 @@ pub enum Format {
   Yaml
   Toml
   Json
-} derive(Eq, Show)
+} derive(Eq, Debug)
+
+///|
+pub fn Format::to_string(self : Format) -> String {
+  match self {
+    Yaml => "Yaml"
+    Toml => "Toml"
+    Json => "Json"
+  }
+}
+
+///|
+pub impl Show for Format with output(self, logger) -> Unit {
+  logger.write_string(self.to_string())
+}
 
 ///|
 /// Constants for regex-like pattern matching

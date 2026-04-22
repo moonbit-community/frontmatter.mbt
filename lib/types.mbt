@@ -10,7 +10,20 @@ pub struct Extract[T] {
   body : String
   /// The parsed attributes from the front matter
   attrs : T
-} derive(Eq, Show)
+} derive(Eq, Debug)
+
+///|
+pub impl[T : Show] Show for Extract[T] with output(self, logger) -> Unit {
+  logger.write_string(
+    "{front_matter: " +
+    self.front_matter.to_string() +
+    ", body: " +
+    self.body.to_string() +
+    ", attrs: " +
+    self.attrs.to_string() +
+    "}",
+  )
+}
 
 ///|
 /// Create an Extract result

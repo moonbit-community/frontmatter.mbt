@@ -100,13 +100,7 @@
 
 ///|
 /// Re-export core types from lib module
-pub typealias @lib.Extract
-
-///|
-pub typealias @lib.Format
-
-///|
-pub typealias @lib.FrontMatterError
+pub using @lib { type Extract, type Format, type FrontMatterError }
 
 ///|
 /// Re-export test functions from lib module
