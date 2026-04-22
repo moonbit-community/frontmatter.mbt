@@ -34,7 +34,9 @@ let bom_pattern = "\ufeff"
 
 ///|
 /// YAML header patterns (equivalent to TypeScript YAML_HEADER)
-pub let yaml_header_patterns : ReadOnlyArray[String] = ["---yaml", "= yaml =", "---"]
+pub let yaml_header_patterns : ReadOnlyArray[String] = [
+  "---yaml", "= yaml =", "---",
+]
 
 ///|
 /// YAML footer patterns (equivalent to TypeScript YAML_FOOTER)  
@@ -42,11 +44,15 @@ pub let yaml_footer_patterns : ReadOnlyArray[String] = ["= yaml =", "---"]
 
 ///|
 /// TOML header patterns (equivalent to TypeScript TOML_HEADER)
-pub let toml_header_patterns : ReadOnlyArray[String] = ["---toml", "+++", "= toml ="]
+pub let toml_header_patterns : ReadOnlyArray[String] = [
+  "---toml", "+++", "= toml =",
+]
 
 ///|
 /// TOML footer patterns (equivalent to TypeScript TOML_FOOTER)
-pub let toml_footer_patterns : ReadOnlyArray[String] = ["---", "+++", "= toml ="]
+pub let toml_footer_patterns : ReadOnlyArray[String] = [
+  "---", "+++", "= toml =",
+]
 
 ///|
 /// JSON header patterns (equivalent to TypeScript JSON_HEADER)

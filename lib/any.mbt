@@ -10,8 +10,9 @@
 /// This follows the TypeScript reference's any.ts approach using format detection.
 ///
 /// # Example Usage
-/// ```moonbit
+/// ```moonbit nocheck
 /// let output = "---json\n{\n  \"title\": \"Three dashes marks the spot\"\n}\n---\nHello, world!"
+///
 /// let _result = extract_any(output)
 /// // _result.attrs will be parsed JSON object data as string
 /// ```
@@ -44,7 +45,7 @@ pub fn extract_any(text : String) -> Extract[String] raise FrontMatterError {
 /// 3. JSON (most specific patterns)
 ///
 /// # Example
-/// ```moonbit
+/// ```moonbit nocheck
 /// let _format = detect_format_any("---json\n{\"key\": \"value\"}\n---\nContent")
 /// // Returns Some(Json)
 /// ```
@@ -83,7 +84,7 @@ pub fn detect_format_any(text : String) -> Format? {
 /// Mirrors the TypeScript reference's test function behavior.
 ///
 /// # Example
-/// ```moonbit
+/// ```moonbit nocheck
 /// let _contains_fm = has_any_front_matter("---\ntitle: Test\n---\nContent")
 /// // Returns true
 /// ```

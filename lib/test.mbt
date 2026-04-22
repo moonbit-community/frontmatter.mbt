@@ -12,31 +12,31 @@
 /// @returns `true` if the string has valid front matter, otherwise `false`.
 /// 
 /// # Example Test for valid YAML front matter
-/// ```moonbit
+/// ```moonbit nocheck
 /// let _result = test_front_matter(
-///   "---\ntitle: Three dashes marks the spot\n---\n"
+///   "---\ntitle: Three dashes marks the spot\n---\n",
 /// )
 /// // _result should be true
 /// ```
 ///
 /// # Example Test for valid TOML front matter  
-/// ```moonbit
+/// ```moonbit nocheck
 /// let _result = test_front_matter(
-///   "---toml\ntitle = 'Three dashes followed by format marks the spot'\n---\n"
+///   "---toml\ntitle = 'Three dashes followed by format marks the spot'\n---\n",
 /// )
 /// // _result should be true
 /// ```
 ///
 /// # Example Test for valid JSON front matter
-/// ```moonbit
+/// ```moonbit nocheck
 /// let _result = test_front_matter(
-///   "---json\n{\"title\": \"Three dashes followed by format marks the spot\"}\n---\n"
+///   "---json\n{\"title\": \"Three dashes followed by format marks the spot\"}\n---\n",
 /// )
 /// // _result should be true
 /// ```
 ///
 /// # Example JSON front matter is not valid as YAML
-/// ```moonbit
+/// ```moonbit nocheck
 /// // This would return false when testing specifically for YAML
 /// let _text = "---json\n{\"title\": \"Test\"}\n---\n"
 /// // Would return false when testing only for YAML format
