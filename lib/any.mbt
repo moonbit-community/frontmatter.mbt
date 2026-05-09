@@ -142,6 +142,6 @@ fn test_header_pattern_recognition(text : String, header : String) -> Bool {
   if lines.length() == 0 {
     return false
   }
-  let first_line = lines[0].to_string()
+  let first_line = lines[0].to_owned()
   matches_header_pattern(first_line, header)
 }
