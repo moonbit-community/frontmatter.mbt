@@ -35,7 +35,7 @@ let bom_char = '\ufeff'
 fn remove_bom(input : String) -> String {
   let bom_string = bom_char.to_string()
   match input.strip_prefix(bom_string) {
-    Some(stripped) => stripped.to_string()
+    Some(stripped) => stripped.to_owned()
     None => input
   }
 }
@@ -103,7 +103,7 @@ fn extract_yaml_with_flexible_footer(
   }
 
   // Validate first line has correct header with optional whitespace
-  let first_line = lines[0].to_string()
+  let first_line = lines[0].to_owned()
   if !matches_header_pattern(first_line, start_delimiter) {
     raise FrontMatterError("Unexpected end of input")
   }
@@ -116,7 +116,7 @@ fn extract_yaml_with_flexible_footer(
   // Find the end delimiter line - allow either "---" or "= yaml =" for YAML
   let mut end_index = -1
   for i = 1; i < lines.length(); i = i + 1 {
-    let line = lines[i].to_string()
+    let line = lines[i].to_owned()
     if matches_footer_pattern(line, "---") ||
       matches_footer_pattern(line, "= yaml =") {
       end_index = i
@@ -132,7 +132,7 @@ fn extract_yaml_with_flexible_footer(
     // Check if there are any body lines after the footer
     let body_lines : Array[String] = []
     for i = end_index + 1; i < lines.length(); i = i + 1 {
-      body_lines.push(lines[i].to_string())
+      body_lines.push(lines[i].to_owned())
     }
     let body = body_lines.join("\n")
     return FrontMatterResult::{ front_matter: "", body }
@@ -141,19 +141,19 @@ fn extract_yaml_with_flexible_footer(
   // Extract front matter content
   let front_matter_lines : Array[String] = []
   for i = 1; i < end_index; i = i + 1 {
-    front_matter_lines.push(lines[i].to_string())
+    front_matter_lines.push(lines[i].to_owned())
   }
   let front_matter = front_matter_lines.join("\n")
 
   // Extract body content
   let body_lines : Array[String] = []
   for i = end_index + 1; i < lines.length(); i = i + 1 {
-    body_lines.push(lines[i].to_string())
+    body_lines.push(lines[i].to_owned())
   }
   let body = body_lines.join("\n")
 
   // Clean front matter following TypeScript whitespace handling
-  let clean_front_matter = front_matter.trim().to_string()
+  let clean_front_matter = front_matter.trim().to_owned()
   FrontMatterResult::{ front_matter: clean_front_matter, body }
 }
 
@@ -186,7 +186,7 @@ fn extract_toml_with_flexible_footer(
   }
 
   // Validate first line has correct header with optional whitespace
-  let first_line = lines[0].to_string()
+  let first_line = lines[0].to_owned()
   if !matches_header_pattern(first_line, start_delimiter) {
     raise FrontMatterError("Unexpected end of input")
   }
@@ -199,7 +199,7 @@ fn extract_toml_with_flexible_footer(
   // Find the end delimiter line - allow "---", "+++", or "= toml =" for TOML
   let mut end_index = -1
   for i = 1; i < lines.length(); i = i + 1 {
-    let line = lines[i].to_string()
+    let line = lines[i].to_owned()
     if matches_footer_pattern(line, "---") ||
       matches_footer_pattern(line, "+++") ||
       matches_footer_pattern(line, "= toml =") {
@@ -216,7 +216,7 @@ fn extract_toml_with_flexible_footer(
     // Check if there are any body lines after the footer
     let body_lines : Array[String] = []
     for i = end_index + 1; i < lines.length(); i = i + 1 {
-      body_lines.push(lines[i].to_string())
+      body_lines.push(lines[i].to_owned())
     }
     let body = body_lines.join("\n")
     return FrontMatterResult::{ front_matter: "", body }
@@ -225,19 +225,19 @@ fn extract_toml_with_flexible_footer(
   // Extract front matter content
   let front_matter_lines : Array[String] = []
   for i = 1; i < end_index; i = i + 1 {
-    front_matter_lines.push(lines[i].to_string())
+    front_matter_lines.push(lines[i].to_owned())
   }
   let front_matter = front_matter_lines.join("\n")
 
   // Extract body content
   let body_lines : Array[String] = []
   for i = end_index + 1; i < lines.length(); i = i + 1 {
-    body_lines.push(lines[i].to_string())
+    body_lines.push(lines[i].to_owned())
   }
   let body = body_lines.join("\n")
 
   // Clean front matter following TypeScript whitespace handling
-  let clean_front_matter = front_matter.trim().to_string()
+  let clean_front_matter = front_matter.trim().to_owned()
   FrontMatterResult::{ front_matter: clean_front_matter, body }
 }
 
@@ -271,7 +271,7 @@ fn extract_with_pattern_matching(
 
   // Validate first line has correct header with optional whitespace
   // This follows the TypeScript WHITESPACES + NEWLINE pattern logic
-  let first_line = lines[0].to_string()
+  let first_line = lines[0].to_owned()
   if !matches_header_pattern(first_line, start_delimiter) {
     raise FrontMatterError("Unexpected end of input")
   }
@@ -284,7 +284,7 @@ fn extract_with_pattern_matching(
   // Find the end delimiter line (following TypeScript footer matching)
   let mut end_index = -1
   for i = 1; i < lines.length(); i = i + 1 {
-    let line = lines[i].to_string()
+    let line = lines[i].to_owned()
     if matches_footer_pattern(line, end_delimiter) {
       end_index = i
       break
@@ -297,7 +297,7 @@ fn extract_with_pattern_matching(
   // Validate body separation: if footer is immediately followed by non-whitespace
   // on the same line, it's an error (following TypeScript behavior)
   if end_index < lines.length() {
-    let footer_line = lines[end_index].to_string()
+    let footer_line = lines[end_index].to_owned()
     let remaining_content = match footer_line.strip_prefix(end_delimiter) {
       Some(rest) => rest.trim()
       None => ""
@@ -318,7 +318,7 @@ fn extract_with_pattern_matching(
     // Use array slicing for better performance
     let body_lines : Array[String] = []
     for i = body_start_index; i < lines.length(); i = i + 1 {
-      body_lines.push(lines[i].to_string())
+      body_lines.push(lines[i].to_owned())
     }
     let body = body_lines.join("\n")
     return FrontMatterResult::{ front_matter: "", body }
@@ -328,7 +328,7 @@ fn extract_with_pattern_matching(
   // Optimized: pre-allocate with known size
   let front_matter_lines : Array[String] = []
   for i = 1; i < end_index; i = i + 1 {
-    front_matter_lines.push(lines[i].to_string())
+    front_matter_lines.push(lines[i].to_owned())
   }
   let front_matter = front_matter_lines.join("\n")
 
@@ -339,12 +339,12 @@ fn extract_with_pattern_matching(
   } else {
     let body_lines : Array[String] = []
     for i = end_index + 1; i < lines.length(); i = i + 1 {
-      body_lines.push(lines[i].to_string())
+      body_lines.push(lines[i].to_owned())
     }
     body_lines.join("\n")
   }
 
   // Clean front matter following TypeScript whitespace handling
-  let clean_front_matter = front_matter.trim().to_string()
+  let clean_front_matter = front_matter.trim().to_owned()
   FrontMatterResult::{ front_matter: clean_front_matter, body }
 }

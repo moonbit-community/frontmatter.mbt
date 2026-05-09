@@ -79,7 +79,7 @@ pub fn has_bom(text : String) -> Bool {
 /// Remove BOM from text if present
 pub fn remove_bom_prefix(text : String) -> String {
   match text.strip_prefix(bom_pattern) {
-    Some(rest) => rest.to_string()
+    Some(rest) => rest.to_owned()
     None => text
   }
 }
@@ -97,7 +97,7 @@ pub fn matches_header_pattern(line : String, pattern : String) -> Bool {
   match line.strip_prefix(pattern) {
     Some(rest) => {
       // The rest should only contain whitespace (following TypeScript WHITESPACES pattern)
-      let rest_str = rest.to_string()
+      let rest_str = rest.to_owned()
       let chars = rest_str.to_array()
       let mut all_whitespace = true
       for i = 0; i < chars.length(); i = i + 1 {
