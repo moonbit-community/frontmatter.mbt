@@ -418,23 +418,23 @@ test "extraction handles invalid inputs" {
 test "format detection edge cases" {
   // Empty string
   let empty_result = detect_format_any("")
-  inspect(empty_result, content="None")
+  debug_inspect(empty_result, content="None")
 
   // Invalid format
   let invalid_result = detect_format_any("---unsupported\nfoo: bar\n---\n")
-  inspect(invalid_result, content="None")
+  debug_inspect(invalid_result, content="None")
 
   // Valid YAML
   let yaml_result = detect_format_any("---\nfoo: bar\n---\n")
-  inspect(yaml_result, content="Some(Yaml)")
+  debug_inspect(yaml_result, content="Some(Yaml)")
 
   // Valid TOML
   let toml_result = detect_format_any("+++\nfoo = \"bar\"\n+++\n")
-  inspect(toml_result, content="Some(Toml)")
+  debug_inspect(toml_result, content="Some(Toml)")
 
   // Valid JSON
   let json_result = detect_format_any("---json\n{\"foo\": \"bar\"}\n---\n")
-  inspect(json_result, content="Some(Json)")
+  debug_inspect(json_result, content="Some(Json)")
 }
 
 ///|
