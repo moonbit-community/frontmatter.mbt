@@ -13,7 +13,13 @@ pub struct Extract[T] {
 } derive(Eq, Debug)
 
 ///|
-pub impl[T : Show] Show for Extract[T] with output(self, logger) -> Unit {
+pub extend Extract with Eq::{not_equal, equal}
+
+///|
+pub extend Extract with @debug.Debug::{to_repr}
+
+///|
+pub impl[T : Show] Show for Extract[T] with fn output(self, logger) -> Unit {
   logger.write_string(
     "{front_matter: " +
     self.front_matter.to_string() +
@@ -24,6 +30,9 @@ pub impl[T : Show] Show for Extract[T] with output(self, logger) -> Unit {
     "}",
   )
 }
+
+///|
+pub extend Extract with Show::{to_string, output}
 
 ///|
 /// Create an Extract result
