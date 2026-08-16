@@ -11,6 +11,12 @@ pub enum Format {
 } derive(Eq, Debug)
 
 ///|
+pub extend Format with Eq::{not_equal, equal}
+
+///|
+pub extend Format with @debug.Debug::{to_repr}
+
+///|
 pub fn Format::to_string(self : Format) -> String {
   match self {
     Yaml => "Yaml"
@@ -20,9 +26,12 @@ pub fn Format::to_string(self : Format) -> String {
 }
 
 ///|
-pub impl Show for Format with output(self, logger) -> Unit {
+pub impl Show for Format with fn output(self, logger) -> Unit {
   logger.write_string(self.to_string())
 }
+
+///|
+pub extend Format with Show::{output}
 
 ///|
 /// Constants for regex-like pattern matching
