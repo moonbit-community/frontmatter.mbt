@@ -13,7 +13,7 @@ pub struct Extract[T] {
 } derive(Eq, Debug)
 
 ///|
-pub impl[T : Show] Show for Extract[T] with output(self, logger) -> Unit {
+pub impl[T : Show] Show for Extract[T] with fn output(self, logger) -> Unit {
   logger.write_string(
     "{front_matter: " +
     self.front_matter.to_string() +
@@ -32,5 +32,5 @@ pub fn[T] Extract::new(
   body : String,
   attrs : T,
 ) -> Extract[T] {
-  { front_matter, body, attrs }
+  { front_matter, body, attrs, }
 }

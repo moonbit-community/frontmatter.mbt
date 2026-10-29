@@ -15,7 +15,7 @@ pub suberror FrontMatterError {
 }
 
 ///|
-impl Show for FrontMatterError with output(self, logger) -> Unit {
+impl Show for FrontMatterError with fn output(self, logger) -> Unit {
   match self {
     FrontMatterError(msg) => logger.write_string("FrontMatterError: " + msg)
   }
@@ -135,7 +135,7 @@ fn extract_yaml_with_flexible_footer(
       body_lines.push(lines[i].to_owned())
     }
     let body = body_lines.join("\n")
-    return FrontMatterResult::{ front_matter: "", body }
+    return FrontMatterResult::{ front_matter: "", body, }
   }
 
   // Extract front matter content
@@ -154,7 +154,7 @@ fn extract_yaml_with_flexible_footer(
 
   // Clean front matter following TypeScript whitespace handling
   let clean_front_matter = front_matter.trim().to_owned()
-  FrontMatterResult::{ front_matter: clean_front_matter, body }
+  FrontMatterResult::{ front_matter: clean_front_matter, body, }
 }
 
 ///|
@@ -219,7 +219,7 @@ fn extract_toml_with_flexible_footer(
       body_lines.push(lines[i].to_owned())
     }
     let body = body_lines.join("\n")
-    return FrontMatterResult::{ front_matter: "", body }
+    return FrontMatterResult::{ front_matter: "", body, }
   }
 
   // Extract front matter content
@@ -238,7 +238,7 @@ fn extract_toml_with_flexible_footer(
 
   // Clean front matter following TypeScript whitespace handling
   let clean_front_matter = front_matter.trim().to_owned()
-  FrontMatterResult::{ front_matter: clean_front_matter, body }
+  FrontMatterResult::{ front_matter: clean_front_matter, body, }
 }
 
 ///|
@@ -312,7 +312,7 @@ fn extract_with_pattern_matching(
     // Optimized body extraction for empty front matter case
     let body_start_index = end_index + 1
     if body_start_index >= lines.length() {
-      return FrontMatterResult::{ front_matter: "", body: "" }
+      return FrontMatterResult::{ front_matter: "", body: "", }
     }
 
     // Use array slicing for better performance
@@ -321,7 +321,7 @@ fn extract_with_pattern_matching(
       body_lines.push(lines[i].to_owned())
     }
     let body = body_lines.join("\n")
-    return FrontMatterResult::{ front_matter: "", body }
+    return FrontMatterResult::{ front_matter: "", body, }
   }
 
   // Extract front matter content (following TypeScript FRONT_MATTER group)
@@ -346,5 +346,5 @@ fn extract_with_pattern_matching(
 
   // Clean front matter following TypeScript whitespace handling
   let clean_front_matter = front_matter.trim().to_owned()
-  FrontMatterResult::{ front_matter: clean_front_matter, body }
+  FrontMatterResult::{ front_matter: clean_front_matter, body, }
 }

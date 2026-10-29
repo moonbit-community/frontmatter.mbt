@@ -20,7 +20,7 @@ pub fn Format::to_string(self : Format) -> String {
 }
 
 ///|
-pub impl Show for Format with output(self, logger) -> Unit {
+pub impl Show for Format with fn output(self, logger) -> Unit {
   logger.write_string(self.to_string())
 }
 
