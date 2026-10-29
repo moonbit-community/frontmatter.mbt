@@ -1,7 +1,5 @@
 import {
-  "rami3l/frontmatter/lib" @lib,
+  "rami3l/frontmatter/lib",
 }
 
-options(
-  "is-main": true,
-)
+pkgtype(kind: "executable")

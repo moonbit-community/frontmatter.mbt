@@ -54,4 +54,3 @@ pub using @lib {type Format}
 pub using @lib {type FrontMatterError}
 
 // Traits
-

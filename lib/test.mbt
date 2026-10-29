@@ -43,7 +43,7 @@
 /// ```
 pub fn test_front_matter(
   text : String,
-  formats? : Array[Format] = [Yaml, Toml, Json],
+  formats~ : Array[Format] = [Yaml, Toml, Json],
 ) -> Bool {
   // Follow TypeScript reference: test each format and return true on first match
   for i = 0; i < formats.length(); i = i + 1 {
